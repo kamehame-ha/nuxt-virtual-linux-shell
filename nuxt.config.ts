@@ -30,8 +30,7 @@ export default defineNuxtConfig({
         port: 3000
     },
     nitro: {
-        preset: 'node-server',
-        plugins: ['~/server/index.ts']
+        preset: 'node-server'
     },
     css: [
         '@/assets/css/style.css'
