@@ -312,7 +312,6 @@ runtimeConfig: {
     public: {
         virtualShell: {
             startupLogin: {
-                enabled: boolean,
                 user: string,
                 password: string
             }
