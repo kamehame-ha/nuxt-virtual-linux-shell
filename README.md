@@ -119,7 +119,8 @@ executeScript() {
     })
 }
 ```
-Output: 
+Output:
+
 ![output](images/output.gif)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
