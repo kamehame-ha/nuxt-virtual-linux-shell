@@ -1,4 +1,3 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
     app: {
         head: {
@@ -33,14 +32,11 @@ export default defineNuxtConfig({
     },
     runtimeConfig: {
         public: {
-            // virtualShell: {
-            //     text: [
-            //         'Welcome to KameLinux 22.04.8',
-            //         '_PDocumentation: https://kame.pro',
-            //         '_PLicense and information: https://github.com/kamehame-ha_W',
-            //         `_GLast login: ${(new Date).toLocaleDateString()}`
-            //     ],
-            // }
+            virtualShell: {
+                textModifiers: {
+                    
+                }
+            }
         }
     }
 })

@@ -17,11 +17,12 @@ import { ShellScript, ShellCommand, ShellScriptData, Text, CustomHTML, Input } f
 export default {
     data: () => ({
         shell: {} as HTMLElement,
-        user: 'kame',
-        vm: 'shell',
+        user: 'user',
+        vm: 'linux',
         dont_interrupt: false,
         folder: [] as Array<string>,
-        input_value: null as any
+        input_value: null as any,
+        initial_done: false
     }),
     methods: {
         async executeScript(script_data: ShellScript) {
@@ -216,36 +217,88 @@ export default {
         async delay(ms: number) {
             return new Promise(resolve => setTimeout(resolve, ms));
         },
+        async startupLogin(user: string, pass: string) {
+            // Username
+            const user_input = this.shell.appendChild(document.createElement('div'))
+            user_input.className = `flex gap-1 items-center`
+            user_input.innerHTML = `<p class="">User:</p><p id="username" class="text-blue-400"></p>`
+            const username = document.getElementById('username') as HTMLParagraphElement
+
+            await this.delay(500)
+
+            const typing_indicator = user_input.appendChild(document.createElement('div'))
+            typing_indicator.className = `start-anim h-[0.875rem] w-[7px] bg-white`
+            typing_indicator.id = 'typing'
+
+            await this.typeText(user, username, true)
+
+            await this.delay(500)
+
+            const password_input = this.shell.appendChild(document.createElement('div'))
+            password_input.className = `flex gap-1 items-center`
+            password_input.innerHTML = `<p class="">Password:</p><p id="password" class="text-red-400"></p>`
+            const password = document.getElementById('password') as HTMLParagraphElement
+
+            await this.delay(500)
+
+            const typing_indicator_pass = password_input.appendChild(document.createElement('div'))
+            typing_indicator_pass.className = `start-anim h-[0.875rem] w-[7px] bg-white`
+            typing_indicator_pass.id = 'typing'
+
+            await this.typeText(pass, password, true)
+
+            await this.delay(500)
+
+            await this.writeText('Awaiting response from host...')
+
+            await this.delay(200)
+
+            await this.writeText('_C[#4ade80]Success!')
+
+            await this.delay(500)
+
+            this.shell.innerHTML = ''
+        },
         async startShell() {
             if(this.dont_interrupt) return
 
             this.shell.innerHTML = ''
 
-            if(!useRuntimeConfig().public.virtualShell) {
-                const text = [
+            const { text, info, startupLogin, textModifiers } = useRuntimeConfig().public.virtualShell
+
+            if(startupLogin && !this.initial_done) {
+                await this.startupLogin(startupLogin.user, startupLogin.password)
+            }
+
+            if(text) {
+                await this.writeText(text)
+            } else {
+                const t = [
                     'Welcome to_S _C[#FCC624]_BVirtual Linux Shell _Sfor_S _C[#00DC82]_BNuxt',
                     'https://github.com/kamehame-ha/virtual-linux-shell-nuxt',
                     'Open readme for full guide of configuration & usage_W',
                     '_G_IYou can edit this text throught nuxt.config.js'
                 ]
 
-                await this.writeText(text)
-                await this.finishScript()
-            } else {
-                const { text } = useRuntimeConfig().public.virtualShell
-
-                await this.writeText(text)
-                await this.finishScript()
+                await this.writeText(t)
             }
+
+            if(info) {
+                this.vm = info.host
+                this.user = info.username
+            }
+            await this.finishScript()
         },
         parseStringSelectors(string: string, p: HTMLParagraphElement | HTMLSpanElement) {
+            const { padding, whitespace, ghostText, bold } = useRuntimeConfig().public?.virtualShell?.textModifiers
+
             let text = string
             if (text.includes('_P')) {
-                p.classList.add('pl-8')
+                p.classList.add(padding ?? 'pl-8')
                 text = text.replace('_P', '')
             }
             if (text.includes('_B')) {
-                p.classList.add('font-bold')
+                p.classList.add(bold ?? 'font-bold')
                 text = text.replace('_B', '')
             }
             if (text.includes('_I')) {
@@ -253,7 +306,7 @@ export default {
                 text = text.replace('_I', '')
             }
             if (text.includes('_G')) {
-                p.classList.add('opacity-20')
+                p.classList.add(ghostText ?? 'opacity-20')
                 text = text.replace('_G', '')
             }
             if (text.startsWith('_W')) {
@@ -285,6 +338,7 @@ export default {
         })
 
         await this.startShell()
+        this.initial_done = true
 
         useVirtualShell().onStart(async (args) => {
             if (this.dont_interrupt) return
