@@ -369,14 +369,14 @@ useVirtualShell().executeScript({
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-##### script
+##### > script
 This value represents your script data, as you can see, there are so many options to choose from...
 
 You can use array of scripts to make scripts execute one after another
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-##### cmd
+##### > cmd
 `cmd` is used to customize command which will be typed in shell
 ```ts
 {
@@ -464,7 +464,7 @@ cmd: {
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-##### text
+##### > text
 `text` is used to generate text in shell, of course it support [text styling](#text-styling)
 
 ```ts
@@ -475,7 +475,7 @@ cmd: {
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-##### custom_html
+##### > custom_html
 `custom_html` is used to generate custom html element with `innerHtml()` method
 
 ```ts
@@ -486,7 +486,7 @@ cmd: {
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-##### input
+##### > input
 
 `input` allows you to add inputs to shell commands and collect data from them
 ```ts
@@ -518,7 +518,7 @@ As you can see all of the options are optional, input without any options will b
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-##### silent
+##### > silent
 
 If enabled script will finish without rendering command prompt
 
@@ -554,7 +554,7 @@ executeScript() {
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-##### callback()
+##### > callback()
 In callback you can access `input_value` `script_data` variables and functions `finish` `sendComunicate`
 ```ts
 useVirtualShell().executeScript({}, ({ finish, script_data, input_value, sendComunicate }) => {
@@ -562,15 +562,15 @@ useVirtualShell().executeScript({}, ({ finish, script_data, input_value, sendCom
 })
 ```
 
-##### script_data
+##### > script_data
 
 It is object of your script, used in [silent commands](#silent)
 
-##### input_value
+##### > input_value
 
 Raw value of your input
 
-##### finish
+##### > finish
 
 Used to finish your command, optional variable need to be filled with `script_data` when [silent commands](#silent) are used
 
@@ -588,7 +588,7 @@ executeScript() {
 }
 ```
 
-##### sendComunicate
+##### > sendComunicate
 
 Used to send additional text to shell
 
