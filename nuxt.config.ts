@@ -8,10 +8,9 @@ export default defineNuxtConfig({
             },
             meta: [
                 { charset: 'utf-8' },
-                { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+                { name: 'viewport', content: 'width=device-width, initial-scale=1' }
             ],
             link: [
-                { rel: 'icon', type: 'icon', href: 'favicon.ico' },
                 { rel: 'stylesheet', href: 'https://use.typekit.net/fhk3ybc.css' },
                 { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/firacode@6.2.0/distr/fira_code.css' }
             ]
@@ -32,9 +31,6 @@ export default defineNuxtConfig({
     nitro: {
         preset: 'node-server'
     },
-    css: [
-        '@/assets/css/style.css'
-    ],
     runtimeConfig: {
         public: {
             // virtualShell: {

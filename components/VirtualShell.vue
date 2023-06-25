@@ -18,7 +18,7 @@ export default {
     data: () => ({
         shell: {} as HTMLElement,
         user: 'kame',
-        vm: 'portfolio-vm',
+        vm: 'shell',
         dont_interrupt: false,
         folder: [] as Array<string>,
         input_value: null as any
@@ -41,15 +41,13 @@ export default {
                         await this.writeCustomHtml(script.custom_html)
                     }
 
-                    if(!script.silent) {
-                        useVirtualShell().emitFinish()
-                    }
-
                     if (script.input) {
                         await this.handleInput(script.input)
                     }
 
-                    useVirtualShell().emitFinish(this.input_value)
+                    if (!script.silent) {
+                        useVirtualShell().emitFinish(this.input_value)
+                    }
                 }
             } else {
                 const data = script_data as ShellScriptData
@@ -164,8 +162,6 @@ export default {
                         input.setAttribute(key, value)
                     }
                 }
-
-                if (data.id) input.id = data.id
 
                 const keyPress = (event: KeyboardEvent) => {
                     if (event.key === 'Enter') {
@@ -297,8 +293,8 @@ export default {
         })
 
         useVirtualShell().onFinish(async (script) => {
-            await this.finishScript()
             this.dont_interrupt = false
+            await this.finishScript()
         })
 
         useVirtualShell().onComunicate(async (text) => {

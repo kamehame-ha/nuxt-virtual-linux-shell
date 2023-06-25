@@ -20,7 +20,6 @@ type CustomHTML = string
 type InputAttrs = { [param_name: string]: any }
 
 interface Input  {
-    id?: string
     type?: InputType
     attrs?: InputAttrs
 }

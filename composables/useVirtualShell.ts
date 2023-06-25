@@ -5,7 +5,7 @@ export const useVirtualShell = () => {
         useEventEmitter().emit('finish-script', script)
     }
 
-    function activateScript(script: ShellScript, callback: (options: {finish: (s?: ShellScript) => void, script_data?: ShellScript, input_value?: string, sendComunicate: (t: Text) => void}) => void) {
+    function executeScript(script: ShellScript, callback: (options: {finish: (s?: ShellScript) => void, script_data?: ShellScript, input_value?: string, sendComunicate: (t: Text) => void}) => void) {
         useEventEmitter().emit('start-script', script)
 
         useEventEmitter().off('script-finished')
@@ -53,6 +53,6 @@ export const useVirtualShell = () => {
     }
 
     return {
-        activateScript, onStart, onFinish, emitFinish, onComunicate
+        executeScript, onStart, onFinish, emitFinish, onComunicate
     }
 }
