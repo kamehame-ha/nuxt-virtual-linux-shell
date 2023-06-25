@@ -333,7 +333,10 @@ runtimeConfig: {
         virtualShell: {
             textModifiers: {
                 padding: string,
-                whitespace: string,
+                whitespace: {
+                    start: string,
+                    end: string
+                },
                 ghostText: string,
                 bold: string
             }
