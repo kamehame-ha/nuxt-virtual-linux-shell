@@ -5,8 +5,10 @@
         <div class="y h-3 w-3 bg-yellow-400 rounded-full"></div>
         <div @click="startShell" class="r h-3 w-3 bg-red-400 rounded-full cursor-pointer"></div>
     </div>
-    <div class="scroll-wrapper flex-col-reverse">
-        <div ref="shell" id="shell" class="shell flex flex-col gap-[5px] h-[350px] w-[550px] text-white mt-2 font-monospace text-sm overflow-y-auto"></div>
+    <div class="scroll-wrapper">
+        <div id="scroll" class="shell flex flex-col gap-[5px] h-[350px] w-[550px] text-white mt-2 font-monospace text-sm overflow-y-auto">
+            <div ref="shell" id="shell" class="shell"></div>
+        </div>
     </div>
 </div>
 </template>
@@ -200,6 +202,8 @@ export default {
             new_prompt.id = 'current'
             const user = new_prompt.appendChild(document.createElement('div'))
             user.outerHTML = `<div><span class="text-fuchsia-400 font-semibold">${this.user}</span><span class="font-semibold text-teal-400">@${this.vm}</span>:<span id="folder" class="text-violet-400">${parsed_dir}</span>$</div>`
+
+            this.dont_interrupt = false 
         },
         async typeText(text: string, el: HTMLParagraphElement, kill_indicator?: boolean) {
             const typing_indicator = document.getElementById('typing') as HTMLElement
@@ -261,10 +265,11 @@ export default {
         },
         async startShell() {
             if(this.dont_interrupt) return
+            this.dont_interrupt = true
 
             this.shell.innerHTML = ''
 
-            const { text, info, startupLogin, textModifiers } = useRuntimeConfig().public.virtualShell
+            const { text, info, startupLogin, textModifiers } = useRuntimeConfig().public.virtualShell as any
 
             if(startupLogin && !this.initial_done) {
                 await this.startupLogin(startupLogin.user, startupLogin.password)
@@ -277,7 +282,7 @@ export default {
                     'Welcome to_S _C[#FCC624]_BVirtual Linux Shell _Sfor_S _C[#00DC82]_BNuxt',
                     'https://github.com/kamehame-ha/virtual-linux-shell-nuxt',
                     'Open readme for full guide of configuration & usage_W',
-                    '_G_IYou can edit this text throught nuxt.config.js'
+                    '_G_IYou can edit this text through nuxt.config.js'
                 ]
 
                 await this.writeText(t)
@@ -288,17 +293,27 @@ export default {
                 this.user = info.username
             }
             await this.finishScript()
+            useVirtualShell().emitShellLoaded()
         },
         parseStringSelectors(string: string, p: HTMLParagraphElement | HTMLSpanElement) {
-            const { padding, whitespace, ghostText, bold } = useRuntimeConfig().public?.virtualShell?.textModifiers
+            const defaultModifiers = {
+                padding: 'pl-8',
+                whitespace: {
+                    start: '_W',
+                    end: '_W'
+                },
+                ghostText: 'opacity-20',
+                bold: 'font-bold'
+            }
+            const { padding, whitespace, ghostText, bold } = useRuntimeConfig().public.virtualShell.textModifiers ?? defaultModifiers
 
             let text = string
             if (text.includes('_P')) {
-                p.classList.add(padding ?? 'pl-8')
+                p.classList.add(padding)
                 text = text.replace('_P', '')
             }
             if (text.includes('_B')) {
-                p.classList.add(bold ?? 'font-bold')
+                p.classList.add(bold)
                 text = text.replace('_B', '')
             }
             if (text.includes('_I')) {
@@ -306,14 +321,14 @@ export default {
                 text = text.replace('_I', '')
             }
             if (text.includes('_G')) {
-                p.classList.add(ghostText ?? 'opacity-20')
+                p.classList.add(ghostText)
                 text = text.replace('_G', '')
             }
-            if (text.startsWith('_W')) {
+            if (text.startsWith(whitespace?.start)) {
                 p.classList.add('mt-4')
                 text = text.replace('_W', '')
             }
-            if (text.endsWith('_W')) {
+            if (text.endsWith(whitespace?.end)) {
                 p.classList.add('mb-4')
                 text = text.replace('_W', '')
             }
@@ -332,17 +347,25 @@ export default {
     async mounted() {
         // Auto scroll
         this.shell = document.getElementById('shell') as HTMLElement
+        const scroll = document.getElementById('scroll') as HTMLElement
 
-        watch(() => this.shell.scrollHeight, () => {
-            console.log('Scroll height chnaged')
+        const observer = new ResizeObserver(entries => {
+            for (const entry of entries) {
+                const newHeight = entry.target.clientHeight
+                console.log('New height:',newHeight)
+                scroll.scrollTop = scroll.scrollHeight
+            }
         })
 
-        await this.startShell()
+        observer.observe(this.shell)
+
+        this.startShell()
         this.initial_done = true
 
         useVirtualShell().onStart(async (args) => {
             if (this.dont_interrupt) return
             this.dont_interrupt = true
+            scroll.scrollTop = scroll.scrollHeight
             await this.executeScript(args)
         })
 
@@ -351,7 +374,8 @@ export default {
             await this.finishScript()
         })
 
-        useVirtualShell().onComunicate(async (text) => {
+        useVirtualShell().onCommunicate(async (text) => {
+            scroll.scrollTop = scroll.scrollHeight
             await this.writeText(text)
         })
     }
