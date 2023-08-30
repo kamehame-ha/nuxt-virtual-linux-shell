@@ -182,40 +182,40 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
         </li>
         <ul>
             <li>
-            <a href="#script">script options</a>
+            <a href="#-script">script options</a>
             </li>
             <ul>
                 <li>
-                <a href="#cmd">cmd</a>
+                <a href="#-cmd">cmd</a>
                 </li>
                 <li>
-                <a href="#text">text</a>
+                <a href="#-text">text</a>
                 </li>
                 <li>
-                <a href="#custom_html">custom_html</a>
+                <a href="#-custom_html">custom_html</a>
                 </li>
                 <li>
-                <a href="#input">input</a>
+                <a href="#-input">input</a>
                 </li>
                 <li>
-                <a href="#silent">silent</a>
+                <a href="#-silent">silent</a>
                 </li>
             </ul>
             <li>
-            <a href="#callback">callback()</a>
+            <a href="#-callback">callback()</a>
             </li>
             <ul>
                 <li>
-                <a href="#script_data">script_data</a>
+                <a href="#-script_data">script_data</a>
                 </li>
                 <li>
-                <a href="#input_value">input_value</a>
+                <a href="#-input_value">input_value</a>
                 </li>
                 <li>
-                <a href="#finish">finish()</a>
+                <a href="#-finish">finish()</a>
                 </li>
                 <li>
-                <a href="#sendcomunicate">sendComunicate()</a>
+                <a href="#-sendcomunicate">sendCommunicate()</a>
                 </li>
             </ul>
         </ul>
@@ -270,7 +270,7 @@ runtimeConfig: {
 
 
 #### text
-`text` option respresents shell startup text, text is generated like every other text in the shell so it supports [text styling](#text-styling)
+`text` option represents shell startup text, text is generated like every other text in the shell so it supports [text styling](#text-styling)
 
 ```ts
 runtimeConfig: {
@@ -348,11 +348,11 @@ runtimeConfig: {
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### useVirtualShell()
-Main function of virtual shell, composable returns 5 functions which are used to control component. `executeScript()` is most important... it's used to execute shell scripts. Other functions are used by component itself, but you can also use them to emit/recive shell script lifecycle events
+Main function of virtual shell, composable returns 5 functions which are used to control component. `executeScript()` is most important... it's used to execute shell scripts. Other functions are used by component itself, but you can also use them to emit/receive shell script lifecycle events
 ```ts
 // your-component.vue
 useVirtualShell()
-// executeScript, onStart, onFinish, emitFinish, onComunicate
+// executeScript, onStart, onFinish, emitFinish, onCommunicate
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -409,7 +409,7 @@ cd: {
 ```
 `mode` - if mode is set to 'open' `dir` option is needed otherwise it will not work, but if mode is 'go-back' any other option is optional
 
-`dir` - should be typed without `/` character, there is no lenght limit but it may bug shell line style
+`dir` - should be typed without `/` character, there is no length limit but it may bug shell line style
 
 `go_back_to_default` - if enabled shell will return to default `/` directory
 
@@ -449,7 +449,7 @@ cmd: {
 
 ![command-with-cd](images/command-cd-2.png)
 
-With `go-back` mode shell will simpy return to the prevoius folder
+With `go-back` mode shell will simply return to the previous folder
 
 ```ts
 cmd: {
@@ -506,7 +506,7 @@ As you can see all of the options are optional, input without any options will b
 
 **type** - sets type of the input
 
-**attrs** - it could be any html attribuite with syntax showed below:
+**attrs** - it could be any html attribute with syntax showed below:
 
 ```ts
 {
@@ -546,7 +546,7 @@ executeScript() {
         {
             text: '3',
         },
-    ], ({ finish, sendComunicate }) => {
+    ], ({ finish, sendCommunicate }) => {
         finish()
     })
 }
