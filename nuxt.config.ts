@@ -33,8 +33,13 @@ export default defineNuxtConfig({
     runtimeConfig: {
         public: {
             virtualShell: {
-                textModifiers: {
-                    
+                info: {
+                    username: 'newbie',
+                    host: 'test-vm'
+                },
+                startupLogin: {
+                    user: 'newbie',
+                    password: '123456789linux'
                 }
             }
         }
