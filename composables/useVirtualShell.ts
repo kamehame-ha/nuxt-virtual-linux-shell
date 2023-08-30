@@ -5,7 +5,7 @@ export const useVirtualShell = () => {
         useEventEmitter().emit('finish-script', script)
     }
 
-    function executeScript(script: ShellScript, callback: (options: {finish: (s?: ShellScript) => void, script_data?: ShellScript, input_value?: string, sendComunicate: (t: Text) => void}) => void) {
+    function executeScript(script: ShellScript, callback: (options: {finish: (s?: ShellScript) => void, script_data?: ShellScript, input_value?: string, sendCommunicate: (t: Text) => void}) => void) {
         useEventEmitter().emit('start-script', script)
 
         useEventEmitter().off('script-finished')
@@ -15,12 +15,21 @@ export const useVirtualShell = () => {
                 finish: finishScript,
                 input_value: input_data,
                 script_data: script,
-                sendComunicate: emitComunicate
+                sendCommunicate: emitCommunicate
             })
         })
     }
 
+    function onShellLoad(callback: () => void) {        
+        useEventEmitter().on('shell-loaded', () => {
+            return callback()
+        })
+    }
 
+
+    function emitShellLoaded() {
+        useEventEmitter().emit('shell-loaded')
+    }
  
     function onFinish(callback: (script: ShellScript) => void) {
         useEventEmitter().on('finish-script', (script) => {
@@ -36,16 +45,16 @@ export const useVirtualShell = () => {
         })
     }
 
-    function onComunicate(callback: (text: Text) => void) {
-        useEventEmitter().off('print-comunicate')
+    function onCommunicate(callback: (text: Text) => void) {
+        useEventEmitter().off('print-communicate')
 
-        useEventEmitter().on('print-comunicate', (text) => {
+        useEventEmitter().on('print-communicate', (text) => {
             return callback(text)
         })
     }
 
-    function emitComunicate(text: Text) {
-        useEventEmitter().emit('print-comunicate', text)
+    function emitCommunicate(text: Text) {
+        useEventEmitter().emit('print-communicate', text)
     }
 
     function emitFinish(input_value?: any) {
@@ -53,6 +62,6 @@ export const useVirtualShell = () => {
     }
 
     return {
-        executeScript, onStart, onFinish, emitFinish, onComunicate
+        executeScript, onStart, onFinish, emitFinish, onCommunicate, onShellLoad, emitShellLoaded
     }
 }
