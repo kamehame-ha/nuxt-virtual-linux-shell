@@ -15,7 +15,7 @@
     <a href="#documentation"><strong>Documentation »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/kamehame-ha/nuxt-virtual-linux-shell">Live Demo</a>
+    <a href="https://virtual-linux-shell.kame.pro/">Live Demo</a>
   </p>
 </div>
 
