@@ -1,12 +1,12 @@
 <template>
-<div class="shell-wrapper bg-slate-900 px-4 py-4 rounded-2xl">
+<div class="shell-wrapper bg-slate-900 px-4 py-4 rounded-2xl w-full md:w-[635px]">
     <div class="shell-navigation-dots flex gap-2">
         <div class="g h-3 w-3 bg-green-400 rounded-full"></div>
         <div class="y h-3 w-3 bg-yellow-400 rounded-full"></div>
         <div @click="startShell" class="r h-3 w-3 bg-red-400 rounded-full cursor-pointer"></div>
     </div>
-    <div class="scroll-wrapper">
-        <div id="scroll" class="shell flex flex-col gap-[5px] h-[350px] w-[550px] text-white mt-2 font-monospace text-sm overflow-y-auto">
+    <div class="scroll-wrapper w-full">
+        <div id="scroll" class="shell flex flex-col gap-[5px] h-[350px] w-full text-white mt-2 font-monospace text-sm overflow-y-hidden">
             <div ref="shell" id="shell" class="shell"></div>
         </div>
     </div>
@@ -280,7 +280,7 @@ export default {
             } else {
                 const t = [
                     'Welcome to_S _C[#FCC624]_BVirtual Linux Shell _Sfor_S _C[#00DC82]_BNuxt',
-                    'https://github.com/kamehame-ha/virtual-linux-shell-nuxt',
+                    '_H[https://github.com/kamehame-ha/virtual-linux-shell-nuxt](https://github.com/kamehame-ha/virtual-linux-shell-nuxt)',
                     'Open readme for full guide of configuration & usage_W',
                     '_G_IYou can edit this text through nuxt.config.js'
                 ]
@@ -333,12 +333,26 @@ export default {
                 text = text.replace('_W', '')
             }
 
+            // hex color
+
             const regex = /_C\[#([a-fA-F0-9]{6})\]/;
             const match = text.match(regex);
 
             if(match && match[1]) {
                 p.style.color = `#${match[1]}`
                 text = text.replace(`_C[#${match[1]}]`, '')
+            }
+
+            // hyper link
+
+            const regex2 = /_H\[(.*?)\]\((.*?)\)/;
+
+            const match2 = text.match(regex2)
+            if(match2) {
+                const name = match2[1];
+                const url = match2[2];
+                text = text.replace(`_H[${name}](${url})`, '')
+                p.outerHTML = `<a class="underline" target="_blank" href="${url}">${name}</a>`
             }
 
             return text
@@ -351,8 +365,6 @@ export default {
 
         const observer = new ResizeObserver(entries => {
             for (const entry of entries) {
-                const newHeight = entry.target.clientHeight
-                console.log('New height:',newHeight)
                 scroll.scrollTop = scroll.scrollHeight
             }
         })
@@ -397,4 +409,29 @@ export default {
 .shell-wrapper .shell .user-prompt .stop-anim {
     animation: none;
 }
+
+.shell {
+  scrollbar-width: thin;
+  scrollbar-color: #fff #0f172a;
+}
+
+.shell::-webkit-scrollbar {
+  width: 12px;
+}
+
+.shell::-webkit-scrollbar-track {
+  background: #0f172a;
+  border-radius: 10px;
+}
+
+.shell::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+  border: none;
+}
+
+.shell::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 </style>

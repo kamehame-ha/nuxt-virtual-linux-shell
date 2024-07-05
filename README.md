@@ -56,7 +56,7 @@
 
 ### Built With
 
-* Nuxtjs
+* Nuxt.js
 * TailwindCSS
 * EventEmitter3
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -178,7 +178,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
     </li>
     <ul>
         <li>
-        <a href="#text">executeScript()</a>
+        <a href="#executescript">executeScript()</a>
         </li>
         <ul>
             <li>
@@ -215,10 +215,13 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
                 <a href="#-finish">finish()</a>
                 </li>
                 <li>
-                <a href="#-sendcomunicate">sendCommunicate()</a>
+                <a href="#-sendcommunicate">sendCommunicate()</a>
                 </li>
             </ul>
         </ul>
+        <li>
+        <a href="#">onShellLoad()</a>
+        </li>
     </ul>
     <li>
       <a href="#text-styling">Text Styling</a>
@@ -590,7 +593,7 @@ executeScript() {
 }
 ```
 
-##### > sendComunicate
+##### #-sendCommunicate
 
 Used to send additional text to shell
 
@@ -600,8 +603,8 @@ executeScript() {
         cmd: {
             name: 'command1'
         }
-    }, ({ finish, sendComunicate }) => {
-        sendComunicate('Important text')
+    }, ({ finish, sendCommunicate }) => {
+        sendCommunicate('Important text')
 
         finish()
     })
@@ -656,7 +659,7 @@ type ShellScript = ShellScriptData | Array<ShellScriptData>
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Text Styling
-Shell text can be styled using **modifiers** which are respresented by `_` character, complete modifier looks like this `_<modifier_character>` ex. `_S`
+Shell text can be styled using **modifiers** which are represented by `_` character, complete modifier looks like this `_<modifier_character>` ex. `_S`
 
 Value of modifiers: `_P` `_W` `_G` `_B` can be edited in [/configuration](#configuration)
 
