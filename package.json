@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@nuxtjs/tailwindcss": "^6.7.2",
-    "eventemitter3": "^5.0.1"
+    "eventemitter3": "^5.0.1",
+    "vercel": "^34.3.0"
   }
 }
