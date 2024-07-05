@@ -1,3 +1,6 @@
+> [!IMPORTANT]
+> The docs are not finished... still working on some features like URL markdown. Everything that is described in the documentation works.
+
 <a name="readme-top"></a>
 
 <!-- PROJECT LOGO -->
