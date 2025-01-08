@@ -10,6 +10,7 @@ export default defineNuxtConfig({
                 { name: 'viewport', content: 'width=device-width, initial-scale=1' }
             ],
             link: [
+                { rel: 'icon', type: 'image/png', href: '/avatar.png' },
                 { rel: 'stylesheet', href: 'https://use.typekit.net/fhk3ybc.css' },
                 { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/firacode@6.2.0/distr/fira_code.css' }
             ]
