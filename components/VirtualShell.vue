@@ -434,4 +434,25 @@ export default {
   background: #555;
 }
 
+.user-prompt {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+.user-prompt > .ml-\[5px\] {
+    margin-left: 0;
+}
+
+@media (min-width: 750px) {
+    .user-prompt {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+    .user-prompt > .ml-\[5px\] {
+        margin-left: 5px;
+    }
+}
+
 </style>
