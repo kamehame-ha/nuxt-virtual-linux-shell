@@ -46,7 +46,7 @@
                 <button class="text-purple-500 bg-purple-500/10 border border-purple-500 rounded-md px-2 pb-[2px] pt-[5px] text-sm leading-[20px] cursor-pointer flex shrink-0">Docs</button>
             </a>
         </div>
-        <div class="footer flex pt-[125px] pb-[25px] text-white text-sm">Created by kameHame HA - All rights reserved © 2024</div>
+        <div class="footer flex pt-[125px] pb-[25px] text-white text-sm">Created by kameHame HA - All rights reserved © 2025</div>
     </div>
 </template>
 
